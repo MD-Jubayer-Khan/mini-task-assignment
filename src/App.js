@@ -5,7 +5,7 @@ import Header from './Components/Header';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App  mb-28">
         <Header></Header>
         <AddTask></AddTask>
         <AllTask></AllTask>

@@ -35,7 +35,8 @@ const AllTask = () => {
                </thead>
                <tbody>
                     {
-                        allTasks.map(task => <TaskDetails key={task.id} task={task}></TaskDetails>)
+                        allTasks.map(task => <TaskDetails
+                             key={task.id} task={task}></TaskDetails>)
                     }
                </tbody>
              </table>

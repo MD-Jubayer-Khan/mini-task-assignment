@@ -11,7 +11,6 @@ const AddTask = () => {
 
     let date = new Date().toLocaleString().toString()
 
-    console.log(message)
     const onSubmit = e => {
         e.preventDefault();
 

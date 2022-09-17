@@ -1,8 +1,10 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import img from '../Asset/images.jpeg'
+import EditModal from './EditModal';
 
 const TaskDetails = ({ task }) => {
+  const [taskid, setTaskid] = useState(null)
 
   const handleDelete = id => {
 
@@ -20,10 +22,9 @@ const TaskDetails = ({ task }) => {
       .catch(function (error) {
         console.log(error);
       });
-    
-  }
-  
-console.log(task);
+
+  };
+  console.log(task);
 
     return (
         <>
@@ -49,10 +50,13 @@ console.log(task);
               <td>{task?.priority}</td>  
               <td>{task.created_on}</td> 
               <td>
-              <button className="btn btn-xs btn-warning">Edit</button>
+              <label onClick={()=> setTaskid(task.id)} htmlFor="edit-modal" className="btn btn-xs btn-warning">Edit</label>
               <button onClick={()=> handleDelete(task.id)} className="btn btn-xs btn-error ml-2">Delete</button>
               </td>         
             </tr>
+          {
+            taskid &&  <EditModal taskid={taskid} >  </EditModal>
+          }
         </>
     );
 };
