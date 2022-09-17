@@ -20,7 +20,7 @@ const AllTask = () => {
 
             setTasks(data)
         })
-    },[ tasks])
+    },[])
 
     if(!tasks.tasks){
         return <p>Loading</p>
@@ -43,7 +43,16 @@ const AllTask = () => {
 
 
 
-    }
+    };
+    const handleDragEnd = (results) => {
+        if (!results.destination) {
+            return
+          }
+        let tempTask = [...tasks];
+       const [reorderData] = tempTask.splice(results.source.index,1);
+       tempTask.splice(results.destination.index, 0 , reorderData)
+       setTasks(tempTask)
+    } 
 
 
     return (
@@ -52,14 +61,14 @@ const AllTask = () => {
 
 
             <form className='space-y-4 my-4' onSubmit={handleSearch}>
-            <input className="input input-bordered input-ghost w-96" placeholder='created_on' type="date "
+            <input className="input input-bordered input-ghost w-96" placeholder='your message' type="date "
                  onChange={(e) => setSearch(e.target.value)}/>
                  <input className='btn btn-info btn-wide ml-3' type="submit" value="Search" />
             </form>
 
 
             <div className="overflow-x-auto w-full px-12">
-        <DragDropContext>
+        <DragDropContext onDragEnd={ (results) => handleDragEnd(results)}>
              <table className="table w-full">
                {/* /* <!-- head -->  */}
                <thead>
