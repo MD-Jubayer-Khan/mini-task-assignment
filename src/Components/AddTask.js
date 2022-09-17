@@ -36,6 +36,7 @@ const AddTask = () => {
         setMessage(' ');
         setPriority(' ');
         setAssigned(' ')
+        alert('task added successfully')
     };
 
     return (

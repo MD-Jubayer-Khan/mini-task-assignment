@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import TaskDetails from './TaskDetails';
 
 const AllTask = () => {
     const [tasks, setTasks] = useState([])
+    const [ search, setSearch] = useState('')
+
+
     const allTasks = tasks.tasks;
+
     useEffect(()=>{
         fetch('https://devza.com/tests/tasks/list',{
             headers:{
@@ -12,16 +17,49 @@ const AllTask = () => {
             })
         .then(res => res.json())
         .then(data => {
-            setTasks(data)})
-    },[tasks])
+
+            setTasks(data)
+        })
+    },[ tasks])
 
     if(!tasks.tasks){
         return <p>Loading</p>
     }
 
+    const handleSearch = (event) => {
+        event.preventDefault()
+    console.log(search);
+        const searchText = search;
+        setSearch(searchText);
+
+        // if( search){
+        //      const match = allTasks.filter(task => task.message.toLowerCase().includes(search));
+        //         console.log(match);
+        //         setTasks(match)
+        // }
+        // else{
+        //     return <p>No matching task found</p>
+        // }
+
+
+
+    }
+
+
     return (
+
         <div className='mt-8'>
+
+
+            <form className='space-y-4 my-4' onSubmit={handleSearch}>
+            <input className="input input-bordered input-ghost w-96" placeholder='created_on' type="date "
+                 onChange={(e) => setSearch(e.target.value)}/>
+                 <input className='btn btn-info btn-wide ml-3' type="submit" value="Search" />
+            </form>
+
+
             <div className="overflow-x-auto w-full px-12">
+        <DragDropContext>
              <table className="table w-full">
                {/* /* <!-- head -->  */}
                <thead>
@@ -32,16 +70,26 @@ const AllTask = () => {
                    <th>Created date</th>
                    <th>Action</th>
                  </tr>
-               </thead>
-               <tbody>
-                    {
-                        allTasks.map(task => <TaskDetails
-                             key={task.id} task={task}></TaskDetails>)
-                    }
-               </tbody>
-             </table>
+               </thead> 
+               <Droppable droppableId="droppable-1" type="PERSON">
+                {
+                    (provided, snapshot)=>(
+                        <tbody ref={provided.innerRef}
+                        {...provided.droppableProps}>
+                        {
+                          allTasks.map(task => <TaskDetails key={task.id} task={task}></TaskDetails>)
+    
+                        }
+                        {provided.placeholder}
+                   </tbody>
+                    )
+                }
+               </Droppable>
+             </table> 
+       </DragDropContext>
             </div>
         </div>
+
     );
 };
 
