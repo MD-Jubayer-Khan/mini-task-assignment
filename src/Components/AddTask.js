@@ -14,26 +14,23 @@ const AddTask = () => {
     console.log(message)
     const onSubmit = e => {
         e.preventDefault();
+        let body = new FormData();
 
-        var body = {
-            created_on : date,
-            priority : priority,
-            assigned_to : assigned_to, 
-            message : message
-        }
-        console.log((body));
-        
-        axios({
-            method: 'post',
-            url: 'https://devza.com/tests/tasks/create',
-            data: body,
-            headers: {  authToken: 'UrM4YHgb1FcqEf1tuKwmAMMX5MxFZ12a' }
+        body.append("message", message);
+        body.append("created_on", date);
+        body.append("priority", priority);
+        body.append("assigned_to", assigned_to);
+    
+
+        axios
+        .post("https://devza.com/tests/tasks/create", body, {
+          headers: { authToken: "UrM4YHgb1FcqEf1tuKwmAMMX5MxFZ12a" },
         })
         .then(function (response) {
-            console.log(response);
+          console.log(response);
         })
         .catch(function (error) {
-            console.log(error);
+          console.log(error);
         });
     };
 
