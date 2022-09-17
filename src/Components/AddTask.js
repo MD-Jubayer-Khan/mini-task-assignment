@@ -14,6 +14,7 @@ const AddTask = () => {
     console.log(message)
     const onSubmit = e => {
         e.preventDefault();
+
         let body = new FormData();
 
         body.append("message", message);
@@ -32,6 +33,10 @@ const AddTask = () => {
         .catch(function (error) {
           console.log(error);
         });
+
+        setMessage(' ');
+        setPriority(' ');
+        setAssigned(' ')
     };
 
     return (

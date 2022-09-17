@@ -13,7 +13,7 @@ const AllTask = () => {
         .then(res => res.json())
         .then(data => {
             setTasks(data)})
-    },[])
+    },[tasks])
 
     if(!tasks.tasks){
         return <p>Loading</p>

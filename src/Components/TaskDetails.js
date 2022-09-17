@@ -6,17 +6,19 @@ const TaskDetails = ({ task }) => {
 
   const handleDelete = id => {
 
-        axios({
-          method: 'post',
-          url: 'https://devza.com/tests/tasks/delete',
-          data: {taskid : id},
-          headers: {  authToken: 'UrM4YHgb1FcqEf1tuKwmAMMX5MxFZ12a' }
+    let body = new FormData();
+
+    body.append("taskid", id);
+
+      axios
+      .post("https://devza.com/tests/tasks/delete", body, {
+        headers: { authToken: "UrM4YHgb1FcqEf1tuKwmAMMX5MxFZ12a" },
       })
       .then(function (response) {
-          console.log(response);
+        console.log(response);
       })
       .catch(function (error) {
-          console.log(error);
+        console.log(error);
       });
     
   }
